@@ -18,4 +18,5 @@ Tiene una represetnacion en 4 atributos {daniel,enrique,martin,pablo} represeta 
 Metodos:
 - **cargarPilaDeportes / cargarPilaApellidos / cargarPilaEsposas:**  El objetivo es generar pilas random para cada uno de los casos sin repetir los valores posibles.
 - **constructor:** Crea cada uno de los atributos de tipo esposo {daniel,enrique,martin,pablo}, con una caracteristica random de cada uno de ellos.
-- 
+-  **aptitud:** Retorna la suma de la aptitud de cada una de los atributos de tipo esposo, teniendo en cuenta condiciones generales y condiciones particulares de cada uno de ellos.
+
