@@ -1,4 +1,19 @@
 # IA-TP2-AlgoritmoGenetico
+## Ambiente
+# GIT
+1. Crear cuenta de gitHub https://github.com
+2. Instalar git https://git-scm.com/
+3. Ir a la carpeta que sera el workspace de eclipse por linea de comando
+3. git clone https://github.com/camus122/IA-TP2-AlgoritmoGenetico
+4. ingresar user y pass
+
+## IDE
+1. Instalar la JDK de java http://www.oracle.com/technetwork/es/java/javase/downloads/index.html
+2. Descargar eclipse: https://www.eclipse.org/downloads/
+3. Iniciar eclipse
+4. Import Git > Projects from git
+5. Agregar el repostiorio, este seria la carpeta que se creo dentro del workspace luego del git clone
+
 
 ## Ejecucion del test - JUnit
 - AlgoritmoGeneticoTest 
