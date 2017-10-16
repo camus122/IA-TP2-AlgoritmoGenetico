@@ -28,7 +28,7 @@ Este package contiene todos los componentes custom que se realizaron para el TP 
 - Esposo
 
 ## Cromosoma!
-Tiene una represetnacion en 4 atributos {daniel,enrique,martin,pablo} represeta cada una de las secciones del cromoosma.
+Tiene una represetnacion en 4 atributos {daniel,enrique,martin,pablo} represeta cada una de las secciones del cromosoma.
 
 Metodos:
 - **cargarPilaDeportes / cargarPilaApellidos / cargarPilaEsposas:**  El objetivo es generar pilas random para cada uno de los casos sin repetir los valores posibles.
