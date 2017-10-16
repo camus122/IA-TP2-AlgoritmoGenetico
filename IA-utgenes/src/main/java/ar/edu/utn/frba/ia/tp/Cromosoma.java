@@ -72,7 +72,7 @@ public class Cromosoma extends Individuo {
 		this.setMartin(new Esposo(this.pilaApellidos.pop(),this.pilaDeportes.pop(),this.pilaEsposas.pop(),this.pilaDeportes.pop()));
 		this.setPablo(new Esposo(this.pilaApellidos.pop(),this.pilaDeportes.pop(),this.pilaEsposas.pop(),this.pilaDeportes.pop()));
 		
-		this.printCromosoma();
+		//this.printCromosoma();
 	}
 	
 	public void printCromosoma(){
@@ -91,13 +91,13 @@ public class Cromosoma extends Individuo {
 		if(!esposo.getApellido().equals(Apellido.Ortega)){
 			value++;
 		}else{
-			value--;
+			value = value - 1;
 		}				
 		//La joven que practica natación no conoce a Daniel.
 		if(!esposo.getDeporteMujer().equals(Deporte.natación)){
 			value++;
 		}else{
-			value--;
+			value = value - 1;
 		}
 		value+=this.aptitudGeneral(esposo);
 		return value;
@@ -110,7 +110,7 @@ public class Cromosoma extends Individuo {
 		if(!esposo.getApellido().equals(Apellido.Lopez)){
 			value++;
 		}else{
-			value--;
+			value = value - 1;
 		}
 		value+=this.aptitudGeneral(esposo);
 		return value;
@@ -122,7 +122,7 @@ public class Cromosoma extends Individuo {
 		if(this.pablo.getApellido().equals(Apellido.Garcia)){
 			value++;
 		}else{
-			value--;
+			value = value - 1;
 		}		
 		value+=this.aptitudGeneral(this.pablo);		
 		return value;
@@ -134,19 +134,19 @@ public class Cromosoma extends Individuo {
 		if(!this.martin.getDeporteVaron().equals(Deporte.basquetbol)){
 			value++;
 		}else{
-			value--;
+			value = value - 1;
 		}
 		//Martin no conoce a Alicia
 		if(!this.martin.getEsposa().equals(Esposa.Alicia)){
 			value++;
 		}else{
-			value--;
+			value = value - 1;
 		}		
 		//Florencia no conoce a Martín  
 		if(!this.martin.getEsposa().equals(Esposa.Florencia)){
 			value++;
 		}else{
-			value--;
+			value = value - 1;
 		}	
 		
 		value+=this.aptitudGeneral(this.martin);
@@ -157,61 +157,67 @@ public class Cromosoma extends Individuo {
 	private double aptitudGeneral(Esposo esposo){
 		double value=0;
 		//El marido de Natalia integra un equipo de rugby.
-		if(esposo.getEsposa().equals(Esposa.Natalia) && esposo.getDeporteVaron().equals(Deporte.rugby)){
-			value++;
-		}else{
-			value--;
-		}
+		if(esposo.getEsposa().equals(Esposa.Natalia))
+				if (esposo.getDeporteVaron().equals(Deporte.rugby))
+					value++;
+				else
+					value--;
+				
 		//El que juega al handbol se apellida Varela.
-		if(esposo.getDeporteVaron().equals(Deporte.handbol) && esposo.getApellido().equals(Apellido.Varela)){
-			value++;
-		}else{
-			value--;
-		}		
+		if(esposo.getDeporteVaron().equals(Deporte.handbol))
+			if(esposo.getApellido().equals(Apellido.Varela))
+				value++;
+			else
+				value--;
+				
 		//La joven que juega al voleibol no es la pareja de López. 
-		if(esposo.getDeporteMujer().equals(Deporte.voleibol) && !esposo.getApellido().equals(Apellido.Lopez)){
-			value++;
-		}else{
-			value--;
-		}			
+		if(esposo.getDeporteMujer().equals(Deporte.voleibol))
+			if(!esposo.getApellido().equals(Apellido.Lopez))
+				value++;
+			else
+				value--;
+						
 		//El esposo de Carolina no practica basquetbol ni handbol.
-		if(esposo.getEsposa().equals(Esposa.Carolina) && 
-			!esposo.getDeporteVaron().equals(Deporte.basquetbol) && 
-			!esposo.getDeporteVaron().equals(Deporte.handbol)){
-			value++;
-		}else{
-			value--;
-		}			
+		if(esposo.getEsposa().equals(Esposa.Carolina))
+			
+			if(!esposo.getDeporteVaron().equals(Deporte.basquetbol) && 
+			   !esposo.getDeporteVaron().equals(Deporte.handbol))
+				value++;
+			else
+				value--;
+					
 		//La que practica equitación no se llama Florencia y no conoce a Varela. 
-		if(esposo.getDeporteMujer().equals(Deporte.equitación) &&
-			!esposo.getEsposa().equals(Esposa.Florencia) &&
-			!esposo.getApellido().equals(Apellido.Varela)){
-			value++;
-		}else{
-			value--;
-		}
+		if(esposo.getDeporteMujer().equals(Deporte.equitación))
+			if(!esposo.getEsposa().equals(Esposa.Florencia) &&
+			   !esposo.getApellido().equals(Apellido.Varela))
+				value++;
+			else
+				value--;
+		
 		//El que integra un equipo de fútbol está en pareja con la joven que juega al tenis.
-		if(esposo.getDeporteVaron().equals(Deporte.fútbol) && esposo.getDeporteMujer().equals(Deporte.tenis)){
-			value++;
-		}else{
-			value--;
-		}			
+		if(esposo.getDeporteVaron().equals(Deporte.fútbol))
+			if(esposo.getDeporteMujer().equals(Deporte.tenis))
+				value++;
+			else
+				value--;
+					
 		//Florencia no conoce a Varela. 
-		if(esposo.getEsposa().equals(Esposa.Florencia) && 
-				!esposo.getApellido().equals(Apellido.Varela)){
-			value++;
-		}else{
-			value--;
-		}
+		if(esposo.getEsposa().equals(Esposa.Florencia))
+			if(!esposo.getApellido().equals(Apellido.Varela))
+				value++;
+			else
+				value--;
+		
 		
 		//Ni López ni Ortega conocen a Natalia.
-		if(esposo.getEsposa().equals(Esposa.Natalia) && 
-			!esposo.getApellido().equals(Apellido.Lopez) &&
-			!esposo.getApellido().equals(Apellido.Ortega)){
-			value++;
-		}else{
-			value--;
-		}		
+		if(esposo.getEsposa().equals(Esposa.Natalia))
+			if(!esposo.getApellido().equals(Apellido.Lopez) &&
+			   !esposo.getApellido().equals(Apellido.Ortega))
+				value++;
+			else
+				value--;
+		
+		
 		return value;
 
 	}
