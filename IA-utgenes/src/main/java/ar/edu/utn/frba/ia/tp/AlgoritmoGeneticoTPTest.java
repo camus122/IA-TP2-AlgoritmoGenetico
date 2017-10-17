@@ -14,9 +14,7 @@ public class AlgoritmoGeneticoTPTest {
 	@Test
 	public void testUnaVuelta() {
 		
-		//for(int i = 0; i < 50; i++){
-			
-		CriterioDeParo paroInstantaneo = new CantidadDeCiclos(99L);
+		CriterioDeParo paroInstantaneo = new CantidadDeCiclos(500L);
 		Configuracion config = new ConfiguracionTP();
 		config.setCriterioDeParo(paroInstantaneo);
 		
@@ -26,12 +24,11 @@ public class AlgoritmoGeneticoTPTest {
 		System.out.println("Cromosoma seleccionado");
 		System.out.println("Aptitud: "+resultado.aptitud());
 		((Cromosoma)resultado).printCromosoma();
-		//} 
+		
 	}
 	
 	public void testCruzamiento() {
-		
-//		Cruzamiento.simple(individuos);
+
 		
 	}
 	

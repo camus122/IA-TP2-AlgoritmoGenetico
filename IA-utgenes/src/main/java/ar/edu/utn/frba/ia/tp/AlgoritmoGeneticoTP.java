@@ -1,6 +1,10 @@
 package main.java.ar.edu.utn.frba.ia.tp;
 
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import main.java.ar.edu.utn.frba.ia.ag.AlgoritmoGenetico;
 import main.java.ar.edu.utn.frba.ia.ag.Configuracion;
@@ -10,6 +14,17 @@ public class AlgoritmoGeneticoTP extends AlgoritmoGenetico {
 
 	public AlgoritmoGeneticoTP(Configuracion configuracion, Class<? extends Individuo> individuoClass) {
 		super(configuracion,individuoClass);
+		
+		try {
+			Handler fileHandler = new FileHandler("./agTp.log", false);
+			SimpleFormatter simpleFormatter = new SimpleFormatter();
+			fileHandler.setFormatter(simpleFormatter);
+			Logger.getLogger(
+					Logger.GLOBAL_LOGGER_NAME).addHandler(fileHandler);
+			
+		} catch (SecurityException e) {
+		} catch (IOException e) {
+		}
 	}
 	
 	@Override

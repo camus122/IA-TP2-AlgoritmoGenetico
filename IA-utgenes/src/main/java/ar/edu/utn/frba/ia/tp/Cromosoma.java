@@ -1,15 +1,18 @@
 package main.java.ar.edu.utn.frba.ia.tp;
 
 import java.util.Stack;
+import java.util.logging.Logger;
 
 import main.java.ar.edu.utn.frba.ia.ag.Individuo;
 
 public class Cromosoma extends Individuo {
 	
-	private Stack<Deporte> pilaDeportes=new Stack<Cromosoma.Deporte>();
-	private Stack<Apellido> pilaApellidos=new Stack<Cromosoma.Apellido>();
-	private Stack<Esposa> pilaEsposas=new Stack<Cromosoma.Esposa>();
-	
+
+	private Esposo daniel;
+	private Esposo enrique;
+	private Esposo martin;
+	private Esposo pablo;
+
 	public enum Apellido{
 		Ortega, Lopez, Varela, Garcia
 	}
@@ -21,14 +24,8 @@ public class Cromosoma extends Individuo {
 	public enum Esposa{
 		Alicia, Natalia, Carolina, Florencia
 	}
-
-	private Esposo daniel;
-	private Esposo enrique;
-	private Esposo martin;
-	private Esposo pablo;
 	
-	
-	private void cargarPilaDeportes(){
+	private void cargarPilaDeportes(Stack<Deporte> pilaDeportes){
 		while(Deporte.values().length != pilaDeportes.size()){
 			Deporte element=Deporte.values()[(int) (Math.random() * Deporte.values().length)];
 			if(!pilaDeportes.contains(element)){
@@ -37,7 +34,7 @@ public class Cromosoma extends Individuo {
 		}
 	}
 	
-	private void cargarPilaApellidos(){
+	private void cargarPilaApellidos(Stack<Apellido> pilaApellidos){
 		while(Apellido.values().length != pilaApellidos.size()){
 			Apellido element=Apellido.values()[(int) (Math.random() * Apellido.values().length)];
 			if(!pilaApellidos.contains(element)){
@@ -46,7 +43,7 @@ public class Cromosoma extends Individuo {
 		}
 	}
 	
-	private void cargarPilaEsposas(){
+	private void cargarPilaEsposas(Stack<Esposa>pilaEsposas){
 		while(Esposa.values().length != pilaEsposas.size()){
 			Esposa element=Esposa.values()[(int) (Math.random() * Esposa.values().length)];
 			if(!pilaEsposas.contains(element)){
@@ -58,19 +55,25 @@ public class Cromosoma extends Individuo {
 	
 	@Override
 	public double aptitud() {
+				
 		return this.aptitudDaniel() + this.aptitudEnrique() + this.aptitudPablo() + this.aptitudMartin();
 	}
 	
 
 	public Cromosoma() {
-		this.cargarPilaEsposas();
-		this.cargarPilaApellidos();
-		this.cargarPilaDeportes();
 		
-		this.setDaniel(new Esposo(this.pilaApellidos.pop(),this.pilaDeportes.pop(),this.pilaEsposas.pop(),this.pilaDeportes.pop()));
-		this.setEnrique(new Esposo(this.pilaApellidos.pop(),this.pilaDeportes.pop(),this.pilaEsposas.pop(),this.pilaDeportes.pop()));
-		this.setMartin(new Esposo(this.pilaApellidos.pop(),this.pilaDeportes.pop(),this.pilaEsposas.pop(),this.pilaDeportes.pop()));
-		this.setPablo(new Esposo(this.pilaApellidos.pop(),this.pilaDeportes.pop(),this.pilaEsposas.pop(),this.pilaDeportes.pop()));
+		Stack<Deporte> pilaDeportes=new Stack<Cromosoma.Deporte>();
+		Stack<Apellido> pilaApellidos=new Stack<Cromosoma.Apellido>();
+		Stack<Esposa> pilaEsposas=new Stack<Cromosoma.Esposa>();		
+		
+		this.cargarPilaEsposas(pilaEsposas);
+		this.cargarPilaApellidos(pilaApellidos);
+		this.cargarPilaDeportes(pilaDeportes);
+		
+		this.setDaniel(new Esposo(pilaApellidos.pop(),pilaDeportes.pop(),pilaEsposas.pop(),pilaDeportes.pop()));
+		this.setEnrique(new Esposo(pilaApellidos.pop(),pilaDeportes.pop(),pilaEsposas.pop(),pilaDeportes.pop()));
+		this.setMartin(new Esposo(pilaApellidos.pop(),pilaDeportes.pop(),pilaEsposas.pop(),pilaDeportes.pop()));
+		this.setPablo(new Esposo(pilaApellidos.pop(),pilaDeportes.pop(),pilaEsposas.pop(),pilaDeportes.pop()));
 		
 		//this.printCromosoma();
 	}
@@ -89,15 +92,15 @@ public class Cromosoma extends Individuo {
 		Esposo esposo = this.daniel;
 		//Daniel no se apellida Ortega.
 		if(!esposo.getApellido().equals(Apellido.Ortega)){
-			value++;
+			value+=1;
 		}else{
-			value = value - 1;
+			value-=5;
 		}				
 		//La joven que practica natación no conoce a Daniel.
 		if(!esposo.getDeporteMujer().equals(Deporte.natación)){
-			value++;
+			value+=1;
 		}else{
-			value = value - 1;
+			value-=5;
 		}
 		value+=this.aptitudGeneral(esposo);
 		return value;
@@ -108,9 +111,9 @@ public class Cromosoma extends Individuo {
 		//Enrique se apellida López. 
 		Esposo esposo = this.enrique;
 		if(!esposo.getApellido().equals(Apellido.Lopez)){
-			value++;
+			value+=1;
 		}else{
-			value = value - 1;
+			value-=5;
 		}
 		value+=this.aptitudGeneral(esposo);
 		return value;
@@ -120,9 +123,9 @@ public class Cromosoma extends Individuo {
 		double value=0;
 		//El nombre de García es Pablo.
 		if(this.pablo.getApellido().equals(Apellido.Garcia)){
-			value++;
+			value+=1;
 		}else{
-			value = value - 1;
+			value-=5;
 		}		
 		value+=this.aptitudGeneral(this.pablo);		
 		return value;
@@ -132,23 +135,22 @@ public class Cromosoma extends Individuo {
 		double value=0;
 		//Martín, que no practica basquetbol, no conoce a Alicia.
 		if(!this.martin.getDeporteVaron().equals(Deporte.basquetbol)){
-			value++;
+			value+=1;
 		}else{
-			value = value - 1;
+			value-=5;
 		}
 		//Martin no conoce a Alicia
 		if(!this.martin.getEsposa().equals(Esposa.Alicia)){
-			value++;
+			value+=1;
 		}else{
-			value = value - 1;
+			value-=5;
 		}		
 		//Florencia no conoce a Martín  
 		if(!this.martin.getEsposa().equals(Esposa.Florencia)){
-			value++;
+			value+=1;
 		}else{
-			value = value - 1;
-		}	
-		
+			value-=5;
+		}			
 		value+=this.aptitudGeneral(this.martin);
 		return value;
 	}
@@ -158,24 +160,24 @@ public class Cromosoma extends Individuo {
 		double value=0;
 		//El marido de Natalia integra un equipo de rugby.
 		if(esposo.getEsposa().equals(Esposa.Natalia))
-				if (esposo.getDeporteVaron().equals(Deporte.rugby))
-					value++;
-				else
-					value--;
+			if (esposo.getDeporteVaron().equals(Deporte.rugby))
+				value++;
+			else
+				value-=3;
 				
 		//El que juega al handbol se apellida Varela.
 		if(esposo.getDeporteVaron().equals(Deporte.handbol))
 			if(esposo.getApellido().equals(Apellido.Varela))
 				value++;
 			else
-				value--;
+				value-=3;
 				
 		//La joven que juega al voleibol no es la pareja de López. 
 		if(esposo.getDeporteMujer().equals(Deporte.voleibol))
 			if(!esposo.getApellido().equals(Apellido.Lopez))
 				value++;
 			else
-				value--;
+				value-=3;
 						
 		//El esposo de Carolina no practica basquetbol ni handbol.
 		if(esposo.getEsposa().equals(Esposa.Carolina))
@@ -184,7 +186,7 @@ public class Cromosoma extends Individuo {
 			   !esposo.getDeporteVaron().equals(Deporte.handbol))
 				value++;
 			else
-				value--;
+				value-=3;
 					
 		//La que practica equitación no se llama Florencia y no conoce a Varela. 
 		if(esposo.getDeporteMujer().equals(Deporte.equitación))
@@ -192,21 +194,21 @@ public class Cromosoma extends Individuo {
 			   !esposo.getApellido().equals(Apellido.Varela))
 				value++;
 			else
-				value--;
+				value-=3;
 		
 		//El que integra un equipo de fútbol está en pareja con la joven que juega al tenis.
 		if(esposo.getDeporteVaron().equals(Deporte.fútbol))
 			if(esposo.getDeporteMujer().equals(Deporte.tenis))
 				value++;
 			else
-				value--;
+				value-=3;
 					
 		//Florencia no conoce a Varela. 
 		if(esposo.getEsposa().equals(Esposa.Florencia))
 			if(!esposo.getApellido().equals(Apellido.Varela))
 				value++;
 			else
-				value--;
+				value-=3;
 		
 		
 		//Ni López ni Ortega conocen a Natalia.
@@ -215,13 +217,12 @@ public class Cromosoma extends Individuo {
 			   !esposo.getApellido().equals(Apellido.Ortega))
 				value++;
 			else
-				value--;
+				value-=3;
 		
 		
 		return value;
 
 	}
-
 
 
 
@@ -267,14 +268,39 @@ public class Cromosoma extends Individuo {
 
 	@Override
 	public Individuo generarRandom() {
-		return this.clone();
+		Individuo nuevoInd;
+		
+		try {
+			nuevoInd = this.getClass().newInstance();
+			return nuevoInd;
+		} catch (Exception e) {
+			Logger.getLogger(
+				Logger.GLOBAL_LOGGER_NAME).severe(
+					"No se puede crear una instancia de "
+					+ this.getClass().getName()
+					+ ". Probablemente no tenga un constructor vacio."
+					+ " // CAUSA: " + e);
+		}
+		//return this.clone();
+		return null;
 	}
 	
 	@Override
 	public String toString() {
-		return (new Double(aptitud())).toString();
+		StringBuffer buffer=new StringBuffer();
+		
+		buffer.append("\r\n");
+		buffer.append("Daniel: "+this.daniel.printEsposo()+"\r\n");
+		buffer.append("Enrique: "+this.enrique.printEsposo()+"\r\n");
+		buffer.append("Martin: "+this.martin.printEsposo()+"\r\n");
+		buffer.append("Pablo: "+this.pablo.printEsposo()+"\r\n");
+		buffer.append("Aptitud: "+(new Double(aptitud())).toString()+"\r\n");
+		
+		return buffer.toString();
+		//return (new Double(aptitud())).toString();
 	}
 
+	/*
 	public Stack<Deporte> getPilaDeportes() {
 		return pilaDeportes;
 	}
@@ -298,7 +324,7 @@ public class Cromosoma extends Individuo {
 	public void setPilaEsposas(Stack<Esposa> pilaEsposas) {
 		this.pilaEsposas = pilaEsposas;
 	}
-	
+	*/
 	
 	
 }
